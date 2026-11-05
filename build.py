@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """Build the static site for gaviria.ca into ./docs (FR at /, EN at /en/, ES at /es/)."""
 import os, shutil, html, json
-from urllib.parse import quote
 from content import CONTENT
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "docs")  # GitHub Pages publishes this folder
 DOMAIN = "https://gaviria.ca/"
+BOOKING_URL = "https://cal.com/gaviria/decision"
 EMAIL = "alex@gaviria.ca"
 PHONE = "+1 581 996 6149"
 PHONE_TEL = "+15819966149"
@@ -44,7 +44,6 @@ def page(code):
     depth = "" if c["dir"] == "" else "../"
     asset = depth + "assets/"
     ids = c["ids"]
-    mailto = f"mailto:{EMAIL}?subject={quote(c['mail_subject'])}"
     # language links
     lang_links = []
     for l in ORDER:
@@ -128,7 +127,7 @@ def page(code):
 <h1 id="hero-title">{T(c['hero_title'])}</h1>
 <p class="lede">{T(c['hero_lede'])}</p>
 <div class="btns">
-<a class="btn btn--decision" href="{mailto}">{T(c['hero_cta'])}</a>
+<a class="btn btn--decision" href="{BOOKING_URL}" target="_blank" rel="noopener">{T(c['hero_cta'])}</a>
 <a class="btn btn--ghost" href="#{ids['offer']}">{T(c['hero_cta2'])}</a>
 </div>
 </div>
@@ -156,7 +155,7 @@ def page(code):
 </div>
 <div class="band">
 <div class="band__text"><span class="band__mark" aria-hidden="true"></span><p>{T(c['band_text'])}</p></div>
-<a class="btn btn--primary" href="{mailto}">{T(c['band_cta'])}</a>
+<a class="btn btn--primary" href="{BOOKING_URL}" target="_blank" rel="noopener">{T(c['band_cta'])}</a>
 </div>
 </div>
 </section>
@@ -223,7 +222,7 @@ def page(code):
 <p class="muted">{T(c['contact_text'])}</p>
 </div>
 <div class="contact__links">
-<a class="btn--decision" href="{mailto}"><span>{EMAIL}</span><span aria-hidden="true">→</span></a>
+<a class="btn--decision" href="{BOOKING_URL}" target="_blank" rel="noopener"><span>{T(c['hero_cta'])}</span><span aria-hidden="true">→</span></a>
 <a href="{LINKEDIN}" rel="me noopener"><span>LinkedIn</span><span aria-hidden="true">→</span></a>
 <a class="quiet" href="tel:{PHONE_TEL}"><span>{PHONE}</span><span aria-hidden="true">→</span></a>
 </div>
